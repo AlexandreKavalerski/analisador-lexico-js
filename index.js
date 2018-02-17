@@ -14,6 +14,8 @@ txt_entrada = `
     }
 `
 var token_atual = ''
+var kw_encontrados = [];
+var identificadores_encontrados = [];
 for(caractere of txt_entrada){
     if(!eh_espaco(caractere)){
         if(!eh_numero(caractere)){
@@ -25,7 +27,16 @@ for(caractere of txt_entrada){
             }
         }
     }else{
-        console.log(`token: ${token_atual} \n`);
+        if(arr_palavras_reservadas.includes(token_atual)){
+            console.log(`kw encontrado: ${token_atual} \n`);
+            kw_encontrados.push(token_atual);
+            token_atual = '';
+        }
+        else if(token_atual){
+            console.log(`identificador encontrado: ${token_atual} \n`);
+            identificadores_encontrados.push(token_atual);
+            token_atual = '';
+        }
     }
     
     
