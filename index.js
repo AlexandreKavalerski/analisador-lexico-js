@@ -13,13 +13,19 @@ txt_entrada = `
         console.log(j);
     }
 `
+var token_atual = ''
 for(caractere of txt_entrada){
     if(!eh_espaco(caractere)){
         if(!eh_numero(caractere)){
             if(terminadores.includes(caractere)){
-                console.log(`terminador: ${caractere}`);   
+                console.log(`token: ${token_atual} \nterminador: ${caractere}`);   
+            }
+            else{
+                token_atual += caractere;
             }
         }
+    }else{
+        console.log(`token: ${token_atual} \n`);
     }
     
     
