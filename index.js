@@ -1,9 +1,5 @@
 const arr_palavras_reservadas = ['if', 'var', 'console.log', 'else', 'for']
-// Para automatizar a criação da Regex: (Com erros) #TODO
-// var txt_regex = arr_palavras_reservadas.reduce((prev, el) => {
-//     return `(${prev}(${el}([^a-z]))`;
-// });
-
+const terminadores = ['+', '=', '\n']
 count_ids = 1
 txt_entrada = `
     var i = 6;
@@ -17,16 +13,33 @@ txt_entrada = `
         console.log(j);
     }
 `
+for(caractere of txt_entrada){
+    if(!eh_espaco(caractere)){
+        if(!eh_numero(caractere)){
+            if(terminadores.includes(caractere)){
+                console.log(`terminador: ${caractere}`);   
+            }
+        }
+    }
+    
+    
 
-// Agora vem a magia.......
-
-var regex = /((if([^a-z]))|(var([^a-z]))|(console.log([^a-z]))|(else([^a-z]))|(for([^a-z])))/gm;
-
-
-// var tokens_palavras_reservadas = txt_entrada.search(regex)//aqui vem o regex
-var tokens_palavras_reservadas = [];
-while (matches = regex.exec(txt_entrada)){
-    if(!tokens_palavras_reservadas.includes(matches[1]))
-        tokens_palavras_reservadas.push(matches[1])
 }
-console.log(tokens_palavras_reservadas)
+
+
+function eh_espaco(caractere){
+    return caractere === ' ';
+}
+
+function eh_numero(caractere){
+    return caractere === 0 | 
+    caractere === 1 | 
+    caractere === 2 | 
+    caractere === 3 | 
+    caractere === 4 | 
+    caractere === 5 | 
+    caractere === 6 | 
+    caractere === 7 | 
+    caractere === 8 | 
+    caractere === 9;
+}
