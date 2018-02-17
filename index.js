@@ -1,27 +1,32 @@
-arr_palavras_reservadas = ['if', '+', '==', '{']
+const arr_palavras_reservadas = ['if', 'var', 'console.log', 'else', 'for']
+// Para automatizar a criação da Regex: (Com erros) #TODO
+// var txt_regex = arr_palavras_reservadas.reduce((prev, el) => {
+//     return `(${prev}(${el}([^a-z]))`;
+// });
+
 count_ids = 1
-txt_entrada = 'if (1 + 1 == 2) {'
+txt_entrada = `
+    var i = 6;
+    if ( i % 2 == 0 ) {
+        console.log("É número par!");
+    }
+    else {
+        console.log("É número ímpar!");
+    }
+    for(j = 0; j < 1; j++){
+        console.log(j);
+    }
+`
 
 // Agora vem a magia.......
 
-arr_tokens_entrada = txt_entrada.split(' ')//aqui vem o regex
-// console.log(arr_tokens_entrada)
+var regex = /((if([^a-z]))|(var([^a-z]))|(console.log([^a-z]))|(else([^a-z]))|(for([^a-z])))/gm;
 
-for (token of arr_tokens_entrada){
-    console.log(`analisando token: ${token}`)
-    if (arr_palavras_reservadas.includes(token)){
-        console.log(`encontrado como palavra reservada: ${token}`)
-    }
-    else{ // se não for reservada, então é um identificador
-        console.log(`${token} id: #${count_ids}`)
-        count_ids += 1
-    }
+
+// var tokens_palavras_reservadas = txt_entrada.search(regex)//aqui vem o regex
+var tokens_palavras_reservadas = [];
+while (matches = regex.exec(txt_entrada)){
+    if(!tokens_palavras_reservadas.includes(matches[1]))
+        tokens_palavras_reservadas.push(matches[1])
 }
-
-
-
-// regex = RegExp('[0-9]')
-// test = txt_entrada.split(regex)//aqui vem o regex
-// console.log(test)
-
-
+console.log(tokens_palavras_reservadas)
