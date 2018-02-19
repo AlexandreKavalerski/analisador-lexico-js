@@ -14,16 +14,20 @@ txt_entrada = `
     }
 `
 
-var token_atual = '';
-var pr_encontrados = [];                // 1 - NO GRAU
-var identificadores_encontrados = [];   // 2 - NO GRAU
-var operadores_encontrados = [];        // 3 - NO GRAU
-var constantes_encontrados = [];        // 4 - NO GRAU (SÓ NÚMEROS INTEIROS)
-var terminadores_encontrados = [];      // 5 - NO GRAU
-var aspas_abertas = false;
-var rastro = "nada";
+var token_atual = '';                   // Armazena a sequencia de caracteres que forma um token
+var pr_encontrados = [];                
+var identificadores_encontrados = [];   
+var operadores_encontrados = [];        
+var constantes_encontrados = [];        // Somente números inteiros
+var terminadores_encontrados = [];      
+var aspas_abertas = false;              // Se for true todo o conteúdo deve ser salvo como um só
+var rastro = "nada";                    // Identifica o tipo de caractere anterior ao atual (identificar sequencias)
+var cont_linha = 0;                     // Identifica a linha de um token
+var cont_coluna = 0;
+
 
 for(caractere of txt_entrada){
+console.log(`cont coluna ${cont_coluna}`);
     if(aspas_abertas){
         if(caractere == '"'){
             aspas_abertas = !aspas_abertas;
@@ -33,6 +37,12 @@ for(caractere of txt_entrada){
         token_atual += caractere;
         rastro = "terminador";
     }
+
+    else if(caractere == "\n"){
+        cont_linha++;
+        cont_coluna = 0;
+    }
+    
     else{
         if(!eh_espaco(caractere)){
             if(!eh_operador(caractere)){
@@ -44,7 +54,7 @@ for(caractere of txt_entrada){
                         token_atual += caractere;
                         rastro = "letra";
                     }
-                    else if(Number.isInteger(parseInt(token_atual[0])) || token_atual == ''){
+                    else if(Number.isInteger(parseInt(token_atual[0]))){
                         token_atual += caractere;
                         rastro = "constante";
                     }
@@ -64,7 +74,7 @@ for(caractere of txt_entrada){
                     }
                 }
             }
-            else if(operadores.includes(token_atual[0]) || token_atual == ''){
+            else if(operadores.includes(token_atual[0])){
                 token_atual += caractere;
                 rastro = "operador";
             }
@@ -79,13 +89,15 @@ for(caractere of txt_entrada){
             rastro = "nada";
         }
     }
+    cont_coluna++;
 }
 
 console.log(`palavras reservadas: ${pr_encontrados}
 \nidentificadores: ${identificadores_encontrados} 
 \noperadores: ${operadores_encontrados} 
 \nterminadores: ${terminadores_encontrados}
-\nconstantes: ${constantes_encontrados}`);
+\nconstantes: ${constantes_encontrados}
+\ncont linha ${cont_linha}`);
 
 function checar_token(token_atual){
     if(token_atual != ''){
