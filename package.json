@@ -1,0 +1,27 @@
+{
+  "name": "analisador-lexico",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "exec:watch": "./node_modules/.bin/nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexandreKavalerski/analisador-lexico-js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexandreKavalerski/analisador-lexico-js/issues"
+  },
+  "homepage": "https://github.com/AlexandreKavalerski/analisador-lexico-js#readme",
+  "dependencies": {
+    "file-system": "^2.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.15.1"
+  }
+}

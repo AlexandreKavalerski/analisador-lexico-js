@@ -98,6 +98,7 @@ console.log(`palavras reservadas: ${pr_encontrados}
 \nterminadores: ${terminadores_encontrados}
 \nconstantes: ${constantes_encontrados}
 \ncont linha ${cont_linha}`);
+fs.writeFile('./saidas/resultado.csv', 'ok', function (err) { })
 
 function checar_token(token_atual) {
   if (token_atual != '') {
