@@ -1,6 +1,7 @@
 const palavras_reservadas = ['if', 'var', 'console.log', 'else', 'for']
 const operadores = ['+', '-', '/', '*', '<', '>', '=', '%', '!']
 const terminadores = [';', '(', ')', '[', ']', '{', '}', '"']
+var fs = require('file-system')
 txt_entrada = `
     var i = 600;
     if ( i % 2 == 0 ) {
