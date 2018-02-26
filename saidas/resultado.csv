@@ -1,0 +1,27 @@
+token;tipo_token;posicao(col);
+var; Palavra Reservada; 5
+if; Palavra Reservada; 22
+console.log; Palavra Reservada; 50
+else; Palavra Reservada; 90
+console.log; Palavra Reservada; 105
+for; Palavra Reservada; 147
+console.log; Palavra Reservada; 179
+i; Identificador; 9
+i; Identificador; 22
+j; Identificador; 151
+j; Identificador; 158
+j; Identificador; 165
+j; Identificador; 191
+=; Operador; 11
+%; Operador; 29
+==; Operador; 33
+=; Operador; 33
+<; Operador; 160
+++; Operador; 166
+600; Constante; 13
+2; Constante; 31
+0; Constante; 14
+É número par!; Constante; 63
+É número ímpar!; Constante; 118
+0; Constante; 15
+1; Constante; 162

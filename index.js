@@ -99,7 +99,15 @@ console.log(`palavras reservadas: ${pr_encontrados}
 \nterminadores: ${terminadores_encontrados}
 \nconstantes: ${constantes_encontrados}
 \ncont linha ${cont_linha}`);
-fs.writeFile('./saidas/resultado.csv', 'ok', function (err) { })
+var saida_arquivo = 'token;tipo_token;posicao(col);\n';
+var aux_token_repetido = [];
+
+concat_retorno_arquivo(pr_encontrados, 'Palavra Reservada');
+concat_retorno_arquivo(identificadores_encontrados, 'Identificador');
+concat_retorno_arquivo(operadores_encontrados, 'Operador');
+concat_retorno_arquivo(constantes_encontrados, 'Constante');
+
+fs.writeFile('./saidas/resultado.csv', saida_arquivo, function (err) { })
 
 function checar_token(token_atual) {
   if (token_atual != '') {
@@ -143,4 +151,19 @@ function eh_terminador(caractere) {
 function eh_numero(caractere) {
   var n = parseInt(caractere);
   return Number.isInteger(n);
+}
+
+function concat_retorno_arquivo(items, tipo_token) {
+  for (id of items) {
+    if (aux_token_repetido[id]) {
+      pos = aux_token_repetido[id].ultima_pos + 1
+
+      saida_arquivo += `${id}; ${tipo_token}; ${txt_entrada.indexOf(id, pos)}\n`;
+      aux_token_repetido[id] = { token: id, qtd: aux_token_repetido[id].qtd + 1, ultima_pos: txt_entrada.indexOf(id, pos) }
+    } else {
+      saida_arquivo += `${id}; ${tipo_token}; ${txt_entrada.indexOf(id)}\n`;
+      aux_token_repetido[id] = { token: id, qtd: 1, ultima_pos: txt_entrada.indexOf(id) }
+    }
+  }
+  aux_token_repetido = []
 }
