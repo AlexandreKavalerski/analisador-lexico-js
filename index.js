@@ -2,18 +2,9 @@ const palavras_reservadas = ['if', 'var', 'console.log', 'else', 'for']
 const operadores = ['+', '-', '/', '*', '<', '>', '=', '%', '!']
 const terminadores = [';', '(', ')', '[', ']', '{', '}', '"']
 var fs = require('file-system')
-txt_entrada = `
-    var i = 600;
-    if ( i % 2 == 0 ) {
-        console.log("É número par!");
-    }
-    else {
-        console.log("É número ímpar!");
-    }
-    for(j = 0; j < 1; j++){
-        console.log(j);
-    }
-`
+var txt_entrada = fs.readFileSync('entradas/comando.js', 'utf8')
+
+linhas_txt_entrada = txt_entrada.split('\n');
 
 var token_atual = '';                   // Armazena a sequencia de caracteres que forma um token
 var pr_encontrados = [];
@@ -28,7 +19,6 @@ var cont_coluna = 0;
 
 
 for (caractere of txt_entrada) {
-  console.log(`cont coluna ${cont_coluna}`);
   if (aspas_abertas) {
     if (caractere == '"') {
       aspas_abertas = !aspas_abertas;
@@ -93,13 +83,7 @@ for (caractere of txt_entrada) {
   cont_coluna++;
 }
 
-console.log(`palavras reservadas: ${pr_encontrados}
-\nidentificadores: ${identificadores_encontrados} 
-\noperadores: ${operadores_encontrados} 
-\nterminadores: ${terminadores_encontrados}
-\nconstantes: ${constantes_encontrados}
-\ncont linha ${cont_linha}`);
-var saida_arquivo = 'token;tipo_token;posicao(col);\n';
+var saida_arquivo = 'token;tipo_token;posicao(linha);posicao(coluna);\n';
 var aux_token_repetido = [];
 
 concat_retorno_arquivo(pr_encontrados, 'Palavra Reservada');
@@ -156,14 +140,40 @@ function eh_numero(caractere) {
 function concat_retorno_arquivo(items, tipo_token) {
   for (id of items) {
     if (aux_token_repetido[id]) {
-      pos = aux_token_repetido[id].ultima_pos + 1
+      ultima_col = aux_token_repetido[id].ultima_col + 1
+      ultima_linha = aux_token_repetido[id].ultima_linha
 
-      saida_arquivo += `${id}; ${tipo_token}; ${txt_entrada.indexOf(id, pos)}\n`;
-      aux_token_repetido[id] = { token: id, qtd: aux_token_repetido[id].qtd + 1, ultima_pos: txt_entrada.indexOf(id, pos) }
+      linha_e_coluna = get_linha_e_coluna_token(id, ultima_col, ultima_linha);
+
+      saida_arquivo += `${id}; ${tipo_token}; ${linha_e_coluna.linha};${linha_e_coluna.coluna}\n`;
+
+      aux_token_repetido[id] = { token: id, qtd: aux_token_repetido[id].qtd + 1, ultima_col: linha_e_coluna.coluna, ultima_linha: linha_e_coluna.linha }
     } else {
-      saida_arquivo += `${id}; ${tipo_token}; ${txt_entrada.indexOf(id)}\n`;
-      aux_token_repetido[id] = { token: id, qtd: 1, ultima_pos: txt_entrada.indexOf(id) }
+      linha_e_coluna = get_linha_e_coluna_token(id);
+      saida_arquivo += `${id}; ${tipo_token}; ${linha_e_coluna.linha};${linha_e_coluna.coluna}\n`;
+
+      aux_token_repetido[id] = { token: id, qtd: 1, ultima_col: linha_e_coluna.coluna, ultima_linha: linha_e_coluna.linha }
     }
   }
   aux_token_repetido = []
+}
+function get_linha_e_coluna_token(token, ultima_col = false, ultima_linha = false) {
+  for (const linha of linhas_txt_entrada) {
+    var col_token = linha.indexOf(token);
+    if (col_token >= 0) {
+      var linha_token = linhas_txt_entrada.indexOf(linha)
+      if (!(ultima_col && ultima_linha)) {
+        return { linha: linha_token, coluna: col_token };
+      }
+      else {
+        if (linha_token == ultima_linha && col_token > ultima_col) {
+          return { linha: linha_token, coluna: col_token };
+        }
+        else if ((linha_token != ultima_linha || col_token != ultima_col) && (linha_token > ultima_linha || col_token > ultima_col)) {
+          return { linha: linha_token, coluna: col_token };
+        }
+      }
+    }
+  }
+  return false;
 }

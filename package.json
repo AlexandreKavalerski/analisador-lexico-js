@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "exec:watch": "./node_modules/.bin/nodemon index.js"
+    "test": "node ./tests/index.spec.js"
   },
   "repository": {
     "type": "git",

@@ -1,27 +1,27 @@
-token;tipo_token;posicao(col);
-var; Palavra Reservada; 5
-if; Palavra Reservada; 22
-console.log; Palavra Reservada; 50
-else; Palavra Reservada; 90
-console.log; Palavra Reservada; 105
-for; Palavra Reservada; 147
-console.log; Palavra Reservada; 179
-i; Identificador; 9
-i; Identificador; 22
-j; Identificador; 151
-j; Identificador; 158
-j; Identificador; 165
-j; Identificador; 191
-=; Operador; 11
-%; Operador; 29
-==; Operador; 33
-=; Operador; 33
-<; Operador; 160
-++; Operador; 166
-600; Constante; 13
-2; Constante; 31
-0; Constante; 14
-É número par!; Constante; 63
-É número ímpar!; Constante; 118
-0; Constante; 15
-1; Constante; 162
+token;tipo_token;posicao(linha);posicao(coluna);
+var; Palavra Reservada; 0;0
+if; Palavra Reservada; 1;0
+console.log; Palavra Reservada; 2;2
+else; Palavra Reservada; 4;0
+console.log; Palavra Reservada; 5;2
+for; Palavra Reservada; 7;0
+console.log; Palavra Reservada; 8;2
+i; Identificador; 0;4
+i; Identificador; 0;4
+j; Identificador; 7;5
+j; Identificador; 8;14
+j; Identificador; undefined;undefined
+j; Identificador; 7;5
+=; Operador; 0;6
+%; Operador; 1;6
+==; Operador; 1;10
+=; Operador; 0;6
+<; Operador; 7;14
+++; Operador; 7;20
+600; Constante; 0;8
+2; Constante; 1;8
+0; Constante; 0;9
+É número par!; Constante; 2;15
+É número ímpar!; Constante; 5;15
+0; Constante; 0;9
+1; Constante; 7;16
